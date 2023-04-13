@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi } from 'openai';
 import express from 'express';
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -7,8 +7,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 // It's a good practice to store sensitive information like API keys in environment variables
-const apiKey = "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";
-const organizationId = "org-k7gdf8t0CkOLrnZTvtfeCLwW";
+
 
 const configuration = new Configuration({
   organization: organizationId,

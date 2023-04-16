@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100;0,300;1,100;1,200&display=swap');
+
+*{
+  color: grey; 
+  font-family: 'Chivo Mono', monospace;
+}
+
+.App {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 20%;
+  background-color: #e6e6e6;
+  padding: 20px;
+  min-width: 200px;
+}
+
+.sidebar button.new-chat-btn {
+  display: block;
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.new-chat-btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.chat-history {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.chat-history li {
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+nav {
+  margin-top: auto;
+}
+
+nav p {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.main {
+  width: 100%;
+  padding: 20px;
+}
+
+.main h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.feed {
+  list-style: none;
+  padding: 0;
+
+}
+
+.bottom-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  background-color: #e6e6e6;
+  padding: 20px;
+}
+
+
+.input-container {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  align-self: baseline;
+  padding-left: 20%;
+}
+
+.bottom-container input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  margin: 10px;
+
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: white;
+  width: 100%;
+  
+  
+}
+.feature-description {
+  font-size: 16px;
+  color: #6c757d;
+  
+  bottom: 20px;
+}

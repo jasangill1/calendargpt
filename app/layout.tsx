@@ -1,5 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Sidebar from 'components/sidebar.tsx'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,9 +18,9 @@ export default function RootLayout({
     
     <html lang="en">
       <body className={inter.className}>
-        <div>
-          {/*sidebar*/}
-
+        <div className='flex'>
+          <Sidebar />
+          
           {/*ClientProvider*/}
 
           <div className='bg-[#342541] flex-1'>{children}</div>

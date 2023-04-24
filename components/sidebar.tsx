@@ -1,5 +1,6 @@
 // components/sidebar.tsx
 import React from 'react';
+import NewChat from './NewChat';
 
 const Sidebar = () => {
   return (

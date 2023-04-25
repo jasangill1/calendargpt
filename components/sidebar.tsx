@@ -6,6 +6,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection } from 'firebase/firestore';
 import { db } from '../firebase';
+import ChatRow from './ChatRow';
 
 const Sidebar = () => {
   const { data: session } = useSession();

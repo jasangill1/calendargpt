@@ -1,11 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { getApps, initializeApp } from "firebase/app";
+import { getApps, getApp, initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: "AIzaSyDRhh9qtLmzEv9tZ2WQkaQu2F8JUAvxBRk",
   authDomain: "calendargpt-7c7ac.firebaseapp.com",
@@ -17,7 +14,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export {db};

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 
+
 const NewChat = () => {
   const router = useRouter();
   const { data: session} = useSession();

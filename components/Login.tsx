@@ -4,14 +4,16 @@ import Image from "next/image";
 
 function Login (){
     return (
-        <div>
+        <div className="bg-[blue] h-screen flex flex-col items-center">
             <Image 
                 src= "https://links.papareact.com/t4i"
                 height={400}
                 width={400}
                 alt="logo"
             />
-            <button>Sign In to use ChatGPT</button>
+            <button onClick={() => signIn("google")} className="text-white font-bold text-3xl animate-pulse">
+                Sign In to use CaliGPT
+            </button>
         </div>
     )
 

@@ -33,7 +33,7 @@ export default async function RootLayout({
               <Sidebar />
             </div>
               
-              {/*ClientProvider*/}
+             
               <ClientProvider/>
 
               <div className='bg-[#342541] flex-1'>{children}</div>

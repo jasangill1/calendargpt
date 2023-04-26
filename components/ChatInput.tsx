@@ -5,6 +5,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import React, { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 
 
 type Props = {
@@ -33,8 +34,10 @@ function ChatInput({chatId}: Props) {
         }
 
         await addDoc(collection(db, "users", session?.user?.email!, "chats", chatId, "messages"), message);
-
+            
         //notifcation loading 
+        const notification =toast.loading("CaliGPT is thinking...");
+
         await fetch("/api/askQuestion", {
             method: "POST",
             headers: {
@@ -45,6 +48,8 @@ function ChatInput({chatId}: Props) {
             })
         }).then(() => {
             //notification done
+            toast.success('CaliGPT has responded!',
+             {id: notification});
         });
     }
 
@@ -60,7 +65,7 @@ function ChatInput({chatId}: Props) {
                 focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
             <button 
                 disabled={!prompt||!session}
-                className="bg-[#11A3FF] text-white px-4 py-2 rounded-md hover:bg-[#0484FF] transition-all]"
+                className="bg-[#11A3FF] text-white px-4 py-2 rounded-md hover:bg-[#0484FF] transition-all] disabled:bg-gray-300 disabled:curesor-not-allowed"
                 type="submit" >
                  <PaperAirplaneIcon className="h-4 w-4 -rotate-45"/>   
             </button>  

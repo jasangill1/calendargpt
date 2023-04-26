@@ -4,7 +4,7 @@ import React from 'react';
 import NewChat from './NewChat';
 import { useSession, signOut } from 'next-auth/react';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection } from 'firebase/firestore';
+import { collection, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase';
 import ChatRow from './ChatRow';
 
@@ -12,8 +12,9 @@ const Sidebar = () => {
   const { data: session } = useSession();
 
   const [chats, loading, error] = useCollection(
-    session && collection(db, "users", session.user?.email!, "chats")
-  );
+    session && query(collection(db, "users", session.user?.email!, "chats"), orderBy("createAt", "asc")
+    )
+      );
   
     console.log(chats);
   return (

@@ -22,7 +22,7 @@ export default async function handler(
         createdAt: admin.firestore.Timestamp.now(),
         user: {
             _id: "ChatGPT",
-            name: 'CaliGPT',
+            name: 'ChatGPT',
             avatar: 'https://placeimg.com/140/140/any',
         },
     }

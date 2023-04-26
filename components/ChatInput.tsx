@@ -34,7 +34,7 @@ function ChatInput({chatId}: Props) {
 
         await addDoc(collection(db, "users", session?.user?.email!, "chats", chatId, "messages"), message);
 
-        //notifcation
+        //notifcation loading 
         await fetch("/api/askQuestion", {
             method: "POST",
             headers: {
@@ -43,7 +43,9 @@ function ChatInput({chatId}: Props) {
             body: JSON.stringify({
                 prompt: input, chatId, model:"Gpt-3.5-turbo", session
             })
-        })
+        }).then(() => {
+            //notification done
+        });
     }
 
 

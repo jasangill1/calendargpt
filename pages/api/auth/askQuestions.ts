@@ -16,7 +16,7 @@ export default async function handler(
 
     //caliGPT query
 
-    const response = await query(prompt, chatId)
+    const response = await query(prompt, chatId, model)
     const message : Message ={
         text: response || "chatbot: I don't know what to say", 
         createdAt: admin.firestore.Timestamp.now(),

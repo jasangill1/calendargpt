@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import admin from 'firebase-admin'
 
 type Data = {
-    name: string
+    answer: string
 }
 
 export default async function handler(
@@ -16,7 +16,7 @@ export default async function handler(
 
     //caliGPT query
 
-    const response = await query(prompt, chatId, model)
+    const response = await query(prompt, chatId)
     const message : Message ={
         text: response || "chatbot: I don't know what to say", 
         createdAt: admin.firestore.Timestamp.now(),

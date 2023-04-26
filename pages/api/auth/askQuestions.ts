@@ -12,11 +12,11 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>
 ) {
-    const { prompt, chatId, model, session } = req.body
+    const { prompt, chatId, session } = req.body
 
     //caliGPT query
 
-    const response = await query(prompt, chatId, model)
+    const response = await query(prompt, chatId)
     const message : Message ={
         text: response || "chatbot: I don't know what to say", 
         createdAt: admin.firestore.Timestamp.now(),

@@ -29,14 +29,14 @@ export default async function RootLayout({
           ): (
 
             <div className='flex'>
-            <div className='bg-[#202123] max-w-xs h-screen overflow-y-auto md:min-w-[20rem]'>
+            <div className='bg-[#4285F4] max-w-xs h-screen overflow-y-auto md:min-w-[20rem]'>
               <Sidebar />
             </div>
               
              
               <ClientProvider/>
 
-              <div className='bg-[#342541] flex-1'>{children}</div>
+              <div className='bg-[#0F9D58] flex-1'>{children}</div>
             </div>
            )}
         </SessionProvider>

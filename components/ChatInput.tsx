@@ -16,6 +16,8 @@ function ChatInput({chatId}: Props) {
     const [prompt, setPrompt] = useState("");
     const {data: session} = useSession();
 
+    const model = "gpt-3.5-turbo";
+
     const sendMessage = async (e: FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
         if(!prompt) return;
@@ -33,7 +35,17 @@ function ChatInput({chatId}: Props) {
             }
         }
 
-        await addDoc(collection(db, "users", session?.user?.email!, "chats", chatId, "messages"), message);
+        await addDoc(
+          collection(
+            db, 
+            "users", 
+            session?.user?.email!, 
+            "chats",
+            chatId,
+            "messages"
+            ),
+            message
+        );
             
         //notifcation loading 
         const notification =toast.loading("CaliGPT is thinking...");
@@ -44,7 +56,10 @@ function ChatInput({chatId}: Props) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                prompt: input, chatId, model:"Gpt-3.5-turbo", session
+                prompt: input,
+                chatId,
+                model,
+                session
             })
         }).then(() => {
             //notification done

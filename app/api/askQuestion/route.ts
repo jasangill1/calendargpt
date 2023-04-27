@@ -1,40 +1,49 @@
-import { adminDb } from '@/firebaseAdmin'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import admin from 'firebase-admin'
+import { adminDb } from '@/firebaseAdmin';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import admin from 'firebase-admin';
 
-import query from '@/lib/queryApi'
+import query from '@/lib/queryApi';
 
 type Data = {
-    answer: string
-}
+  answer: string;
+};
 
-export default async function handler(
 
-    req: NextApiRequest,
-    res: NextApiResponse<Data>
-) {
-    const { prompt, chatId, session } = req.body
+export async function POST(req: NextApiRequest, res: NextApiResponse<Data>) {
+    if (!res) {
+        console.error('Response object is null or undefined');
+        return;
+      }
+  const { prompt, chatId, model, session } = req.body;
 
-    //caliGPT query
 
-    const response = await query(prompt, chatId)
-    const message : Message ={
-        text: response || "chatbot: I don't know what to say", 
-        createdAt: admin.firestore.Timestamp.now(),
-        user: {
-            _id: "ChatGPT",
-            name: 'CaliGPT',
-            avatar: 'https://placeimg.com/140/140/any',
-        },
-    }
 
-    await adminDb
+  console.log('Received request:', req.body);
+
+  // caliGPT query
+  console.log('Sending query:', prompt, chatId);
+  const response = await query(prompt, chatId);
+  console.log('Received query response:', response);
+
+  const message: Message = {
+    text: response || "chatbot: I don't know what to say",
+    createdAt: admin.firestore.Timestamp.now(),
+    user: {
+      _id: 'ChatGPT',
+      name: 'CaliGPT',
+      avatar: 'https://i.imgur.com/7k12EPD.png',
+    },
+  };
+
+  console.log('Adding message to Firestore:', message);
+  await adminDb
     .collection('users')
     .doc(session?.user?.email!)
     .collection('chats')
     .doc(chatId)
     .collection('messages')
     .add(message);
+  console.log('Message added successfully');
 
-    res.status(200).json({ answer: message.text });
+  res.status(200).json({ answer: message.text });
 }

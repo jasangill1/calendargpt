@@ -1,13 +1,15 @@
 import openai from "./chatgpt";
 
-export const query = async (prompt: string, model: string) => {
+const query = async (prompt: string, chatId: string) => {
     const res = await openai
         .createCompletion({
-            model,
+            model: "gpt-3.5-turbo",
             prompt,
             temperature: 0.9,
-    }).then(res => res.data.choices[0].text)
+            top_p: 1,
+    }).then(res => res.data.choices[0].text).catch(err => console.log(err));
    
     return res;
 }
 
+export default query;

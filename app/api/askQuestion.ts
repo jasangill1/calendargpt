@@ -1,7 +1,8 @@
 import { adminDb } from '@/firebaseAdmin'
-import { query } from '../../../lib/queryApi'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import admin from 'firebase-admin'
+
+import query from '@/lib/queryApi'
 
 type Data = {
     answer: string
@@ -22,7 +23,7 @@ export default async function handler(
         createdAt: admin.firestore.Timestamp.now(),
         user: {
             _id: "ChatGPT",
-            name: 'ChatGPT',
+            name: 'CaliGPT',
             avatar: 'https://placeimg.com/140/140/any',
         },
     }

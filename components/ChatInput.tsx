@@ -45,10 +45,10 @@ function ChatInput({chatId}: Props) {
             "messages"
             ),
             message
-        );
-            
+        )
+     
         //notifcation loading 
-        const notification =toast.loading("CaliGPT is thinking...");
+        const notification = toast.loading("CaliGPT is thinking...");
 
         await fetch("/api/askQuestion", {
             method: "POST",
@@ -59,8 +59,8 @@ function ChatInput({chatId}: Props) {
                 prompt: input,
                 chatId,
                 model,
-                session
-            })
+                session,
+            }),
         }).then(() => {
             //notification done
             toast.success('CaliGPT has responded!',

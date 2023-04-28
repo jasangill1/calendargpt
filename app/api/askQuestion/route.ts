@@ -1,29 +1,29 @@
 import { adminDb } from '@/firebaseAdmin';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import admin from 'firebase-admin';
-
 import query from '@/lib/queryApi';
+
 
 type Data = {
   answer: string;
 };
 
-
 export async function POST(req: NextApiRequest, res: NextApiResponse<Data>) {
-    if (!res) {
-        console.error('Response object is null or undefined');
-        return;
-      }
-  const { prompt, chatId, model, session } = req.body;
-
-
+  if (!res) {
+    console.error('Response object is null or undefined');
+    return;
+  }
+  const { prompt, chatId, session } = req.body;
 
   console.log('Received request:', req.body);
 
   // caliGPT query
   console.log('Sending query:', prompt, chatId);
-  const response = await query(prompt, chatId);
+  const response = await query(prompt, chatId, model);
   console.log('Received query response:', response);
+
+  // Log the response as a string
+  console.log('Response as string:', response as string);
 
   const message: Message = {
     text: response || "chatbot: I don't know what to say",
@@ -31,7 +31,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse<Data>) {
     user: {
       _id: 'ChatGPT',
       name: 'CaliGPT',
-      avatar: 'https://i.imgur.com/7k12EPD.png',
+      avatar: 'jjj',
     },
   };
 

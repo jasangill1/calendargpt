@@ -16,7 +16,7 @@ function ChatInput({chatId}: Props) {
     const [prompt, setPrompt] = useState("");
     const {data: session} = useSession();
 
-    const model = "gpt-3.5-turbo";
+    const model = "	text-davinci-003";
 
     const sendMessage = async (e: FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
@@ -25,6 +25,7 @@ function ChatInput({chatId}: Props) {
         const input = prompt.trim();
         setPrompt("");
 
+        
         const message: Message = {
             text: input,
             createdAt: serverTimestamp(),
@@ -34,6 +35,7 @@ function ChatInput({chatId}: Props) {
                 avatar: session?.user?.image! || `https://ui-avatars.com/api/?name=${session?.user?.name}`
             }
         }
+        console.log("Sending prompt to server:", message);
 
         await addDoc(
           collection(
@@ -53,19 +55,31 @@ function ChatInput({chatId}: Props) {
         await fetch("/api/askQuestion", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                prompt: input,
-                chatId,
-                model,
-                session,
+              prompt: input,
+              chatId,
+              model,
+              session,
             }),
-        }).then(() => {
-            //notification done
-            toast.success('CaliGPT has responded!',
-             {id: notification});
-        });
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log("Received response:", data);
+            toast.success('CaliGPT has responded!', {id: notification});
+          })
+          .catch(error => {
+            console.error("Error fetching response:", error);
+            toast.error('An error occurred while fetching CaliGPT response');
+          });
+          
+        
     }
 
 
@@ -80,7 +94,7 @@ function ChatInput({chatId}: Props) {
                 focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
             <button 
                 disabled={!prompt||!session}
-                className="bg-[#11A3FF] text-white px-4 py-2 rounded-md hover:bg-[#0484FF] transition-all] disabled:bg-gray-300 disabled:curesor-not-allowed"
+                className="bg-[#11A3FF] text-white px-4 py-2 rounded-md hover:bg-[#0484FF] transition-all] disabled:bg-gray-300 disabled:cursor-not-allowed"
                 type="submit" >
                  <PaperAirplaneIcon className="h-4 w-4 -rotate-45"/>   
             </button>  

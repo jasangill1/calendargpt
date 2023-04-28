@@ -3,47 +3,53 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import admin from 'firebase-admin';
 import query from '@/lib/queryApi';
 
-
 type Data = {
   answer: string;
 };
 
 export async function POST(req: NextApiRequest, res: NextApiResponse<Data>) {
-  if (!res) {
-    console.error('Response object is null or undefined');
-    return;
+  
+  const { prompt, chatId, session, model } = req.body;
+  if (!prompt || !chatId || !model || !session?.user?.email) {
+    console.error('Invalid request body');
+    return res.status(400).json({ answer: 'Invalid request body' });
   }
-  const { prompt, chatId, session } = req.body;
 
-  console.log('Received request:', req.body);
+ 
 
-  // caliGPT query
-  console.log('Sending query:', prompt, chatId);
+  // Call caliGPT query
+ 
   const response = await query(prompt, chatId, model);
-  console.log('Received query response:', response);
+
+ 
 
   // Log the response as a string
-  console.log('Response as string:', response as string);
+  
 
-  const message: Message = {
+  const message = {
     text: response || "chatbot: I don't know what to say",
     createdAt: admin.firestore.Timestamp.now(),
     user: {
       _id: 'ChatGPT',
       name: 'CaliGPT',
-      avatar: 'jjj',
+      avatar: 'https://links.papareact.com/89k',
     },
   };
 
-  console.log('Adding message to Firestore:', message);
-  await adminDb
-    .collection('users')
-    .doc(session?.user?.email!)
-    .collection('chats')
-    .doc(chatId)
-    .collection('messages')
-    .add(message);
-  console.log('Message added successfully');
+ 
+
+  try {
+    await adminDb
+      .collection('users')
+      .doc(session?.user?.email!)
+      .collection('chats')
+      .doc(chatId)
+      .collection('messages')
+      .add(message);
+   
+  } catch (error) {
+   
+  }
 
   res.status(200).json({ answer: message.text });
 }

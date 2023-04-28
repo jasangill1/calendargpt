@@ -17,6 +17,7 @@ function ChatInput({chatId}: Props) {
     const {data: session} = useSession();
 
     const model = "	text-davinci-003";
+    console.log("prompt:", prompt);
 
     const sendMessage = async (e: FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
@@ -63,25 +64,14 @@ function ChatInput({chatId}: Props) {
               model,
               session,
             }),
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then(data => {
-            console.log("Received response:", data);
+          }).then(() => {
+            console.log("Received response:");
             toast.success('CaliGPT has responded!', {id: notification});
           })
-          .catch(error => {
-            console.error("Error fetching response:", error);
-            toast.error('An error occurred while fetching CaliGPT response');
-          });
           
+         
         
     }
-
 
     return <div>
         <form onSubmit={sendMessage} className="p-5 space-x-5 flex items-center">

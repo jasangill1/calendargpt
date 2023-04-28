@@ -1,32 +1,36 @@
-import { adminDb } from '@/firebaseAdmin';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import admin from 'firebase-admin';
+import { adminDb } from '@/firebaseAdmin';
 import query from '@/lib/queryApi';
 
 type Data = {
   answer: string;
 };
 
-export async function POST(req: NextApiRequest, res: NextApiResponse<Data>) {
-  
-  const { prompt, chatId, session, model } = req.body;
-  if (!prompt || !chatId || !model || !session?.user?.email) {
-    console.error('Invalid request body');
-    return res.status(400).json({ answer: 'Invalid request body' });
+export async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  if (req.method === 'POST') {
+    
   }
+   
+  const { prompt, chatId, model, session } = req.body;
+  
 
- 
-
-  // Call caliGPT query
- 
+  console.log(
+    'Received request with prompt:',
+    prompt,
+    ', chatId:',
+    chatId,
+    ', session:',
+    session,
+    ', and model:',
+    model
+  );
   const response = await query(prompt, chatId, model);
 
- 
-
-  // Log the response as a string
-  
-
-  const message = {
+  const message: Message = {
     text: response || "chatbot: I don't know what to say",
     createdAt: admin.firestore.Timestamp.now(),
     user: {
@@ -36,20 +40,17 @@ export async function POST(req: NextApiRequest, res: NextApiResponse<Data>) {
     },
   };
 
- 
-
-  try {
-    await adminDb
-      .collection('users')
-      .doc(session?.user?.email!)
-      .collection('chats')
-      .doc(chatId)
-      .collection('messages')
-      .add(message);
-   
-  } catch (error) {
-   
-  }
+  await adminDb
+    .collection('users')
+    .doc(session?.user?.email! || '')
+    .collection('chats')
+    .doc(chatId || '')
+    .collection('messages')
+    .add(message);
 
   res.status(200).json({ answer: message.text });
+}
+
+export async function c(req: NextApiRequest, res: NextApiResponse<Data>) {
+  // handle GET requests here
 }

@@ -11,9 +11,6 @@ export async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method === 'POST') {
-    
-  }
    
   const { prompt, chatId, model, session } = req.body;
   

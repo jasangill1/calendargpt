@@ -15,9 +15,9 @@ export default function Home() {
 
           <h2>Example</h2>
           <div className="space-y-2">
-            <p className="infoText">"What does my schedule look like on Thursdays"</p>
-            <p className="infoText">"How can I be more efficient?"</p>
-            <p className="infoText">"What is the longest month"</p>
+            <p className="infoText">What does my schedule look like on Thursdays</p>
+            <p className="infoText">How can I be more efficient?</p>
+            <p className="infoText">What is the longest month</p>
           </div>
         </div>
 
@@ -28,9 +28,9 @@ export default function Home() {
 
           <h2>Example</h2>
           <div className="space-y-2">
-            <p className="infoText">"What does my schedule look like on Thursdays"</p>
-            <p className="infoText">"How can I be more efficient?"</p>
-            <p className="infoText">"What is the longest month"</p>
+            <p className="infoText">What does my schedule look like on Thursdays</p>
+            <p className="infoText">How can I be more efficient?</p>
+            <p className="infoText">What is the longest month</p>
           </div>
         </div>
 
@@ -41,9 +41,9 @@ export default function Home() {
 
           <h2>Example</h2>
           <div className="space-y-2">
-            <p className="infoText">"What does my schedule look like on Thursdays"</p>
-            <p className="infoText">"How can I be more efficient?"</p>
-            <p className="infoText">"What is the longest month"</p>
+            <p className="infoText">What does my schedule look like on Thursdays</p>
+            <p className="infoText">How can I be more efficient?</p>
+            <p className="infoText">What is the longest month</p>
           </div>
         </div>
       </div>

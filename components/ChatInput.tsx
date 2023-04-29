@@ -1,12 +1,11 @@
 'use client'
-
 import { db } from "@/firebase";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
-import { NextApiResponse } from 'next';
+
 
 
 
@@ -19,7 +18,7 @@ function ChatInput({chatId}: Props) {
     const {data: session} = useSession();
 
     const model = "text-davinci-003";
-    console.log("prompt:", prompt);
+   
 
     const sendMessage = async (e: FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
@@ -38,7 +37,7 @@ function ChatInput({chatId}: Props) {
                 avatar: session?.user?.image! || `https://ui-avatars.com/api/?name=${session?.user?.name}`
             }
         }
-        console.log("Sending prompt to server:", message);
+        
 
         await addDoc(
           collection(
@@ -67,7 +66,6 @@ function ChatInput({chatId}: Props) {
               session,
             }),
           }).then(() => {
-            console.log("Received response:");
             toast.success('CaliGPT has responded!', {id: notification});
           })
           

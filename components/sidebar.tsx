@@ -7,6 +7,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase';
 import ChatRow from './ChatRow';
+import Image from 'next/image';
 
 function Sidebar() {
   const { data: session } = useSession();
@@ -36,11 +37,17 @@ function Sidebar() {
         ))}
       </div>
       {session && (
-        <img onClick={() => signOut()} src={session.user?.image!} alt="Profile Picture"
-          className='h-12 w-12 rounded-full cursor-pointer mx-auto mb-2 hover:opacity-50' />
+        <Image
+          onClick={() => signOut()}
+          src={session.user?.image!}
+          alt="Profile Picture"
+          width={48}
+          height={48}
+          className='rounded-full cursor-pointer mx-auto mb-2 hover:opacity-50'
+        />
       )}
-        </div>
     </div>
+  </div>
   );
 }
 

@@ -16,7 +16,6 @@ function Sidebar() {
     )
   );
 
-  console.log(chats);
   return (
     <div className='p-2 flex flex-col h-screen'>
       <div className='flex-1'>
@@ -25,6 +24,11 @@ function Sidebar() {
         <div>
           {/*Model*/}
         </div>
+
+          {loading && (
+            <p className='animate-pulse text-white text-center'>Loading...</p>    
+          )
+          }
         {/*Map through the chat rows*/}
         {chats?.docs.map(chat => (
           <ChatRow key={chat.id} id={chat.id} />

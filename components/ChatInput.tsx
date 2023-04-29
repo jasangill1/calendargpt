@@ -6,6 +6,8 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { NextApiResponse } from 'next';
+
 
 
 type Props = {

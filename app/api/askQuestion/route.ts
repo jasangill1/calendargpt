@@ -11,10 +11,13 @@ export async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-   
+  if (req.method !== 'POST') {
+    res.status(405).end(); // Method Not Allowed
+    return;
+  }
+
   const { prompt, chatId, model, session } = req.body;
   
-
   console.log(
     'Received request with prompt:',
     prompt,
@@ -25,6 +28,7 @@ export async function handler(
     ', and model:',
     model
   );
+
   const response = await query(prompt, chatId, model);
 
   const message: Message = {
@@ -46,8 +50,4 @@ export async function handler(
     .add(message);
 
   res.status(200).json({ answer: message.text });
-}
-
-export async function c(req: NextApiRequest, res: NextApiResponse<Data>) {
-  // handle GET requests here
 }

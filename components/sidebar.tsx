@@ -24,6 +24,7 @@ function Sidebar() {
         <div>
           {/*Model*/}
         </div>
+        <div className='flex flex-col space-y-2 my-2'>
 
           {loading && (
             <p className='animate-pulse text-white text-center'>Loading...</p>    
@@ -38,6 +39,7 @@ function Sidebar() {
         <img onClick={() => signOut()} src={session.user?.image!} alt="Profile Picture"
           className='h-12 w-12 rounded-full cursor-pointer mx-auto mb-2 hover:opacity-50' />
       )}
+        </div>
     </div>
   );
 }

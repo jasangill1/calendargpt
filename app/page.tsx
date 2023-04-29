@@ -1,9 +1,6 @@
-import Image from 'next/image';
-import { Inter } from 'next/font/google';
-import { BreakerIcon } from '@heroicons/react/24/solid';
+
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   return (

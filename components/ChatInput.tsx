@@ -6,6 +6,8 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { NextApiResponse } from 'next';
+
 
 
 type Props = {
@@ -16,6 +18,9 @@ function ChatInput({chatId}: Props) {
     const [prompt, setPrompt] = useState("");
     const {data: session} = useSession();
 
+    const model = "text-davinci-003";
+    console.log("prompt:", prompt);
+
     const sendMessage = async (e: FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
         if(!prompt) return;
@@ -23,6 +28,7 @@ function ChatInput({chatId}: Props) {
         const input = prompt.trim();
         setPrompt("");
 
+        
         const message: Message = {
             text: input,
             createdAt: serverTimestamp(),
@@ -32,30 +38,45 @@ function ChatInput({chatId}: Props) {
                 avatar: session?.user?.image! || `https://ui-avatars.com/api/?name=${session?.user?.name}`
             }
         }
+        console.log("Sending prompt to server:", message);
 
-        await addDoc(collection(db, "users", session?.user?.email!, "chats", chatId, "messages"), message);
-            
+        await addDoc(
+          collection(
+            db, 
+            "users", 
+            session?.user?.email!, 
+            "chats",
+            chatId,
+            "messages"
+            ),
+            message
+        )
+     
         //notifcation loading 
-        const notification =toast.loading("CaliGPT is thinking...");
+        const notification = toast.loading("CaliGPT is thinking...");
 
-        await fetch("/api/askQuestion", {
-            method: "POST",
+        await fetch("/api/route", {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                prompt: input, chatId, model:"Gpt-3.5-turbo", session
-            })
-        }).then(() => {
-            //notification done
-            toast.success('CaliGPT has responded!',
-             {id: notification});
-        });
+              prompt: input,
+              chatId,
+              model,
+              session,
+            }),
+          }).then(() => {
+            console.log("Received response:");
+            toast.success('CaliGPT has responded!', {id: notification});
+          })
+          
+         
+        
     }
 
-
     return <div>
-        <form onSubmit={e =>sendMessage} className="p-5 space-x-5 flex items-center">
+        <form onSubmit={sendMessage} className="p-5 space-x-5 flex items-center">
             <input 
                 value={prompt}
                 onChange={e => {setPrompt(e.target.value)}}
@@ -65,7 +86,7 @@ function ChatInput({chatId}: Props) {
                 focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
             <button 
                 disabled={!prompt||!session}
-                className="bg-[#11A3FF] text-white px-4 py-2 rounded-md hover:bg-[#0484FF] transition-all] disabled:bg-gray-300 disabled:curesor-not-allowed"
+                className="bg-[#11A3FF] text-white px-4 py-2 rounded-md hover:bg-[#0484FF] transition-all] disabled:bg-gray-300 disabled:cursor-not-allowed"
                 type="submit" >
                  <PaperAirplaneIcon className="h-4 w-4 -rotate-45"/>   
             </button>  

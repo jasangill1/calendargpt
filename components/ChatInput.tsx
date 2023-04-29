@@ -18,7 +18,7 @@ function ChatInput({chatId}: Props) {
     const [prompt, setPrompt] = useState("");
     const {data: session} = useSession();
 
-    const model = "	text-davinci-003";
+    const model = "text-davinci-003";
     console.log("prompt:", prompt);
 
     const sendMessage = async (e: FormEvent<HTMLFormElement> ) => {
@@ -55,8 +55,8 @@ function ChatInput({chatId}: Props) {
         //notifcation loading 
         const notification = toast.loading("CaliGPT is thinking...");
 
-        await fetch("/api/askQuestion", {
-            method: "POST",
+        await fetch("/api/route", {
+            method: 'POST',
             headers: {
               "Content-Type": "application/json"
             },

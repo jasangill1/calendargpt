@@ -1,9 +1,10 @@
 'use client'
 import { db } from "@/firebase";
-import { collection, orderBy } from "firebase/firestore";
+import { collection, orderBy, query } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import React from "react";
 import Message from "./Message";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 type Props = {
   chatId: string;
